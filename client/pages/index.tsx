@@ -263,7 +263,7 @@ export default function Home() {
         <div>
           {/* @ts-ignore */}
           <div className={styles.description}>
-            {tokensToBeClaimed.mul(10)} Tokens can be claimed!
+            {tokensToBeClaimed.mul(10).toString()} Tokens can be claimed!
           </div>
           <button className={styles.button} onClick={claimLionTokens}>
             Claim Tokens
@@ -311,12 +311,13 @@ export default function Home() {
           {walletConnected ? (
             <div>
               <div className={styles.description}>
-                You have minted {utils.formatEther(balanceOfLions)} Lion Tokens
+                You have minted {utils.formatEther(balanceOfLions).toString()}{" "}
+                Lion Tokens
               </div>
 
               <div className={styles.description}>
-                Overall {utils.formatEther(tokensMinted)}/10000 have been
-                minted!!!
+                Overall {utils.formatEther(tokensMinted).toString()}/10000 have
+                been minted!!!
               </div>
 
               {renderButton()}
@@ -329,7 +330,7 @@ export default function Home() {
         </div>
 
         <div>
-          <img className={styles.image} src="./0.svg" />
+          <Image src="/0.svg" width={300} height={300} alt={"Ethereum SVG"} />
         </div>
       </div>
 
