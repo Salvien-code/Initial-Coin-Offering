@@ -1,17 +1,25 @@
-import { ethers } from "hardhat";
-import { NFT_CONTRACT_ADDRESS } from "../Constants";
+import { ethers, run } from "hardhat";
+import { setTimeout } from "timers/promises";
+import { NFT_CONTRACT_ADDRESS } from "../client/Constants";
 
 async function main() {
-  const lionsNFTContract = NFT_CONTRACT_ADDRESS;
+  const lionTokenFactory = await ethers.getContractFactory("LionToken");
+  const lionTokenContract = await lionTokenFactory.deploy(NFT_CONTRACT_ADDRESS);
 
-  const lionToken = await ethers.getContractFactory("LionToken");
-  const deployedLionContract = await lionToken.deploy(lionsNFTContract);
-
-  await deployedLionContract.deployed();
+  await lionTokenContract.deployed();
 
   console.log(
-    `The Lion Token contract adddress ${deployedLionContract.address}`
+    `Deployed the Lion Token contract to ${lionTokenContract.address}`
   );
+
+  console.log(`Waiting for a minute before verifying Token contract`);
+  await setTimeout(60000);
+
+  await run("verify:verify", {
+    address: lionTokenContract.address,
+    constructorArguments: [NFT_CONTRACT_ADDRESS],
+  });
+  console.log(`Verified Lion Token contract on Etherscan`);
 }
 
 main()

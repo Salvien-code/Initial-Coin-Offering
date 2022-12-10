@@ -1,18 +1,23 @@
 import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
-import * as dotenv from "dotenv";
-dotenv.config();
+import "dotenv/config";
 
-const ALCHEMY_API_URL = process.env.ALCHEMY_API_URL;
-const METAMASK_PRIVATE_KEY = process.env.METAMASK_PRIVATE_KEY;
+const { ALCHEMY_API_URL, METAMASK_PRIVATE_KEY, ETHERSCAN_API_KEY } =
+  process.env;
 
 const config: HardhatUserConfig = {
   solidity: "0.8.17",
   networks: {
     goerli: {
-      url: ALCHEMY_API_URL!,
+      url: ALCHEMY_API_URL,
       accounts: [METAMASK_PRIVATE_KEY!],
     },
+  },
+  etherscan: {
+    apiKey: ETHERSCAN_API_KEY,
+  },
+  paths: {
+    artifacts: "./client/artifacts",
   },
 };
 

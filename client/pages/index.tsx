@@ -7,7 +7,7 @@ import {
   NFT_CONTRACT_ADDRESS,
   TOKEN_CONTRACT_ABI,
   TOKEN_CONTRACT_ADDRESS,
-} from "../../Constants";
+} from "../Constants";
 import styles from "../styles/Home.module.css";
 import Web3Modal from "web3modal";
 
