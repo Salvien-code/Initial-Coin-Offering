@@ -201,7 +201,7 @@ export default function Home() {
     const web3Provider = new providers.Web3Provider(provider);
 
     const { chainId } = await web3Provider.getNetwork();
-    if (chainId != 5) {
+    if (chainId !== 5) {
       window.alert("Change the network to Goerli");
       throw new Error("Change the network to Goerli");
     }
@@ -235,7 +235,7 @@ export default function Home() {
       getTotalTokensMinted();
       getBalanceOfLionTokens();
       getTokensToBeClaimed();
-      withdrawCoins();
+      getOwner();
     }
   }, [walletConnected]);
 
@@ -248,20 +248,9 @@ export default function Home() {
       );
     }
 
-    if (walletConnected && isOwner) {
-      return (
-        <div>
-          <button className={styles.button1} onClick={withdrawCoins}>
-            Withdraw Coins
-          </button>
-        </div>
-      );
-    }
-
     if (tokensToBeClaimed.gt(0)) {
       return (
         <div>
-          {/* @ts-ignore */}
           <div className={styles.description}>
             {tokensToBeClaimed.mul(10).toString()} Tokens can be claimed!
           </div>
@@ -321,6 +310,19 @@ export default function Home() {
               </div>
 
               {renderButton()}
+              {isOwner ? (
+                <div>
+                  {loading ? (
+                    <button className={styles.button}>Loading...</button>
+                  ) : (
+                    <button className={styles.button} onClick={withdrawCoins}>
+                      Withdraw Coins
+                    </button>
+                  )}
+                </div>
+              ) : (
+                ""
+              )}
             </div>
           ) : (
             <button onClick={connectWallet} className={styles.button}>
